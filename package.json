@@ -2,21 +2,6 @@
   "name": "tko-exercise-tracker-client",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^12.0.0",
-    "@testing-library/user-event": "^13.2.1",
-    "@types/jest": "^27.0.1",
-    "@types/node": "^16.7.13",
-    "@types/react": "^17.0.20",
-    "@types/react-dom": "^17.0.9",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "5.0.0",
-    "tko-component-library": "^0.1.0",
-    "typescript": "^4.4.2",
-    "web-vitals": "^2.1.0"
-  },
   "scripts": {
     "config:dev": "nodemon",
     "prestart": "tsc --outDir ./config/build -p ./config && node ./config/build/index.js",
@@ -26,6 +11,28 @@
     "eject": "react-scripts eject",
     "remote:setup": "NODE_ENV=dev ./terraform/scripts/remote_setup.sh",
     "remote:teardown": "NODE_ENV=dev ./terraform/scripts/remote_teardown.sh"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.7.1",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.13",
+    "@types/react": "^17.0.20",
+    "@types/react-dom": "^17.0.9",
+    "localforage": "^1.10.0",
+    "luxon": "^2.2.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.6",
+    "react-router-dom": "^6.1.1",
+    "react-scripts": "5.0.0",
+    "styled-components": "^5.3.3",
+    "styled-normalize": "^8.0.7",
+    "tko-component-library": "^0.1.0",
+    "typescript": "^4.4.2",
+    "web-vitals": "^2.1.0"
   },
   "eslintConfig": {
     "extends": [
@@ -46,6 +53,8 @@
     ]
   },
   "devDependencies": {
+    "@types/luxon": "^2.0.8",
+    "@types/styled-components": "^5.1.18",
     "react-app-rewired": "^2.1.8"
   }
 }
