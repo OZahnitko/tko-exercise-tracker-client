@@ -119,6 +119,11 @@ export const ExerciseLog = () => {
                   sets: [{ reps: 10, weight: 20 }],
                 },
               });
+              const res = await getDateWorkout(
+                DateTime.fromISO(selectedDate).toFormat("yyyy LLL dd")
+              );
+              if (res.message === PayloadMessage.ok)
+                setWorkoutExercises(() => res.data);
             }}
           >
             ADD THIS ONE

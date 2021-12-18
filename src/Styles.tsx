@@ -4,6 +4,8 @@ export const ContentContainer = styled.div`
   border: 10px solid green;
 
   flex: 1;
+
+  overflow: hidden auto;
 `;
 
 export const FooterContainer = styled.div`
