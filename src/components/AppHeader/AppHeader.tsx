@@ -7,7 +7,6 @@ export const AppHeader = () => {
 
   return (
     <Wrapper>
-      <button>Add</button>
       <button onClick={() => navigate("/")}>HOME</button>
     </Wrapper>
   );
