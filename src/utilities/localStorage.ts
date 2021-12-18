@@ -28,9 +28,9 @@ const getData = async (key: string): Promise<LocalStoragePayload> => {
   }
 };
 
-const handleErr = () => {
-  return { message: PayloadMessage.err };
-};
+const handleErr = () => ({
+  message: PayloadMessage.err,
+});
 
 export const addExercise = async (
   exercise: Exercise
@@ -78,6 +78,15 @@ export const getAllExercises = async (): Promise<LocalStoragePayload> => {
   }
 };
 
+/*
+What are the cases for adding a new workout: 
+1. There are no workouts recorded at all.
+- Need to create a new "workouts entry" and add the date and the exercise as the first entry.
+2. There are no workouts for the current date.
+3. There are no workouts with the same exercise.
+4. There is a workout with the same exercise.
+ */
+
 export const addToWorkout = async ({
   date,
   exercise,
@@ -85,34 +94,42 @@ export const addToWorkout = async ({
   date: string;
   exercise: { name: string; sets: { reps: number; weight: number }[] };
 }) => {
+  // Check if the "workouts" entry exist in local storage
   const workouts = await getData("workouts");
+  // No "workouts entry"
   if (workouts.message === PayloadMessage.empty) {
-    setData("workouts", { [date]: [exercise] });
+    return await setData("workouts", { [date]: [exercise] });
+  }
+  const selectedDateWorkouts = workouts.data?.value[date];
+  console.log(selectedDateWorkouts);
+  // No "workouts" for the selected date
+  if (!selectedDateWorkouts) {
+    await setData("workouts", {
+      ...workouts.data?.value,
+      [date]: [exercise],
+    });
   } else {
-    let allWorkouts = workouts.data?.value;
-    let selectedDateWorkout = workouts.data?.value[date];
-    if (selectedDateWorkout) {
-      selectedDateWorkout = [...selectedDateWorkout, exercise];
+    const selectedExerciseData = selectedDateWorkouts.find(
+      (e: any) => e.name === exercise.name
+    );
+    console.log(selectedExerciseData);
+    if (!selectedExerciseData) {
       await setData("workouts", {
-        ...allWorkouts,
-        [date]: selectedDateWorkout,
-      });
-      return { message: PayloadMessage.ok };
-    } else {
-      await setData("workouts", {
-        ...allWorkouts,
-        [date]: [exercise],
+        ...workouts.data?.value,
+        [date]: [...selectedDateWorkouts, exercise],
       });
     }
   }
-  return { message: PayloadMessage.ok };
 };
 
 export const getDateWorkout = async (date: string) => {
   const res = await getData("workouts");
   if (res.message === PayloadMessage.empty)
     return { message: PayloadMessage.empty };
-  const ddd = res.data?.value[date];
-  console.log(ddd);
-  return { data: ddd, message: PayloadMessage.ok };
+  const selectedDateWorkout = res.data?.value[date];
+  if (!selectedDateWorkout) {
+    return { data: [], message: PayloadMessage.ok };
+  } else {
+    return { data: selectedDateWorkout, message: PayloadMessage.ok };
+  }
 };
