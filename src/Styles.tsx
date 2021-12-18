@@ -10,6 +10,10 @@ export const FooterContainer = styled.div`
   border: 10px solid blue;
 `;
 
+export const HeaderContainer = styled.div`
+  border: 10px solid red;
+`;
+
 export const RootWrapper = styled.div`
   display: flex;
 
